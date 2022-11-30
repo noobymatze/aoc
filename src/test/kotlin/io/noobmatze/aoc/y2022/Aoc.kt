@@ -1,0 +1,83 @@
+package io.noobmatze.aoc.y2022
+
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse.BodyHandlers
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardOpenOption
+import java.time.Year
+import java.util.Properties
+import kotlin.io.path.exists
+import kotlin.io.path.inputStream
+
+object Aoc {
+
+    /**
+     * Returns the input of the given [day] and [year].
+     *
+     * If the file does not exist, but a .env file exists (please don't commit it),
+     * will try to download the input file.
+     *
+     * @param day the day of the puzzle input
+     * @param year the year of the puzzle input
+     * @return the input of the puzzle of this day.
+     * @throws IllegalArgumentException when the file does not exist and could not be downloaded.
+     */
+    @Throws(IllegalArgumentException::class)
+    fun getInput(day: Int, year: Int = Year.now().value): String {
+        val maybeInput = tryDownloadFileIfItDoesNotExist(year, day)
+        if (maybeInput != null)
+            return maybeInput
+
+        val input = Aoc::class.java.getResourceAsStream("/$year/$day")
+            ?: throw IllegalArgumentException("""
+                |Sorry, could not automatically download or get the input file for $year/$day: 
+                |
+                |    https://adventofcode.com/$year/day/$day/input
+                |    
+                |You might try adding a .env file in your root project directory
+                |with the variable SESSION_COOKIE=... (copy it from Firefox). Or
+                |just download it.
+                |    
+                |Happy coding and don't be down, if you don't solve it quickly. 
+                |Enjoy the process and learn, what you can. :-)
+                |
+            """.trimMargin())
+
+        return input.bufferedReader().readText().trim()
+    }
+
+    private fun tryDownloadFileIfItDoesNotExist(year: Int, day: Int): String? {
+        val envFile = Paths.get(".env")
+        val inputFile = Paths.get("src/test/resources/$year/$day")
+        if (inputFile.exists() || !envFile.exists()) {
+            return null
+        }
+
+        val props = Properties().apply { load(envFile.inputStream()) }
+        val sessionCookie = props.getProperty("SESSION_COOKIE")
+        val request = HttpRequest.newBuilder()
+            .uri(URI.create("https://adventofcode.com/$year/day/$day/input"))
+            .header("Cookie", "session=$sessionCookie")
+            .GET()
+            .build()
+
+        val client = HttpClient.newHttpClient();
+        val response = client.send(request, BodyHandlers.ofByteArray())
+        if (response.statusCode() != 200) {
+            throw RuntimeException("${response.statusCode()} for ${response.uri()}\n\n${response.body()?.toString(Charsets.UTF_8) ?: ""}")
+        }
+
+        Files.createDirectories(inputFile.parent)
+        val body = response.body()
+        Files.write(inputFile, body, StandardOpenOption.CREATE_NEW)
+        // We have to return directly here, because the file will
+        // not have been put into the build directory, where
+        // the actual resources will reside after a build.
+        // So for the first run, we just use the response of the server.
+        return body.toString(Charsets.UTF_8).trim()
+    }
+
+}
