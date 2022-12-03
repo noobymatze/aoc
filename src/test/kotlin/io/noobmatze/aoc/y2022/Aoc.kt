@@ -61,6 +61,7 @@ object Aoc {
         val request = HttpRequest.newBuilder()
             .uri(URI.create("https://adventofcode.com/$year/day/$day/input"))
             .header("Cookie", "session=$sessionCookie")
+            .header("User-Agent", "github.com/noobymatze/aoc noobymatze@yahoo.de")
             .GET()
             .build()
 
