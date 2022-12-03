@@ -4,8 +4,6 @@ import kotlin.test.Test
 
 class Day3 {
 
-    private val alphabet = ""
-
     @Test
     fun test() {
         val result = Aoc.getInput(3).lineSequence()
