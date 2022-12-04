@@ -14,6 +14,10 @@ import kotlin.io.path.inputStream
 
 object Aoc {
 
+    fun <B> String.paired(sep: String, transform: (String) -> B): Pair<B, B> =
+        split(sep).map(transform).let { (a, b) -> a to b }
+
+
     /**
      * Returns the input of the given [day] and [year].
      *
