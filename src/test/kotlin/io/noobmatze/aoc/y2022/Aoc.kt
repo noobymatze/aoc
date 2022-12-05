@@ -50,7 +50,7 @@ object Aoc {
                 |
             """.trimMargin())
 
-        return input.bufferedReader().readText().trim()
+        return input.bufferedReader().readText().trimEnd()
     }
 
     private fun tryDownloadFileIfItDoesNotExist(year: Int, day: Int): String? {
