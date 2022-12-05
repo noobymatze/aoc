@@ -24,9 +24,7 @@ class Day5 {
             }
         }
 
-        val result = stacks.map { it[0] }.joinToString("")
-
-        println(result)
+        println(stacks.joinToString("") { "${it[0]}" })
     }
 
     @Test
@@ -46,9 +44,7 @@ class Day5 {
             result.reversed().forEach { stacks[to - 1].addFirst(it) }
         }
 
-        val result = stacks.map { it[0] }.joinToString("")
-
-        println(result)
+        println(stacks.joinToString("") { "${it[0]}" })
     }
 
 }
