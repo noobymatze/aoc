@@ -4,11 +4,6 @@ import kotlin.test.Test
 
 class Day7 {
 
-    sealed interface Tree {
-        data class Folder(val name: String, val children: List<Tree>): Tree
-        data class File(val name: String, val size: Int): Tree
-    }
-
     @Test
     fun test() {
         val wd = mutableListOf<String>()
