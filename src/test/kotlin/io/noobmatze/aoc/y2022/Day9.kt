@@ -1,30 +1,11 @@
 package io.noobmatze.aoc.y2022
 
+import kotlin.math.abs
 import kotlin.test.Test
 
 class Day9 {
 
-    data class Pos(var row: Int, var col: Int) {
-        infix fun isAdjacent(other: Pos): Boolean =
-            // Same spot
-            this == other
-                // Down
-                || (row + 1 == other.row && col == other.col)
-                // Bottom Left
-                || (row + 1 == other.row && col - 1 == other.col)
-                // Bottom Right
-                || (row + 1 == other.row && col + 1 == other.col)
-                // Top
-                || (row - 1 == other.row && col == other.col)
-                // Top Left
-                || (row - 1 == other.row && col - 1 == other.col)
-                // Top Right
-                || (row - 1 == other.row && col + 1 == other.col)
-                // Left
-                || (row == other.row && col - 1 == other.col)
-                // Right
-                || (row == other.row && col + 1 == other.col)
-    }
+    data class Pos(var row: Int, var col: Int)
 
     @Test
     fun test() {
@@ -78,7 +59,9 @@ class Day9 {
     }
 
     private fun move(head: Pos, tail: Pos): Unit = when {
-        head isAdjacent tail -> Unit
+        // Adjacency with math, because I was too stupid before
+        abs(head.row - tail.row) <= 1 && abs(head.col - tail.col) <= 1 ->
+            Unit
 
         else -> {
             tail.row = when {
