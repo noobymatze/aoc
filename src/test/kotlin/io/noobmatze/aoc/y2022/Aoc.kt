@@ -17,6 +17,22 @@ object Aoc {
     fun <B> String.paired(sep: String, transform: (String) -> B): Pair<B, B> =
         split(sep).map(transform).let { (a, b) -> a to b }
 
+    /**
+     * Returns a new sequence mapping all [A]s to [B]s while threading a state [S] through every
+     * transformation.
+     *
+     * @param initialState the initial state
+     * @param transform do the actual transformation
+     */
+    fun <S, A, B> Sequence<A>.mapAccum(initialState: S, transform: (S, A) -> Pair<S, B>): Sequence<B> = sequence {
+        var state = initialState
+        for (x in this@mapAccum) {
+            val (newState, result) = transform(state, x)
+            state = newState
+            yield(result)
+        }
+    }
+
 
     /**
      * Returns the input of the given [day] and [year].
