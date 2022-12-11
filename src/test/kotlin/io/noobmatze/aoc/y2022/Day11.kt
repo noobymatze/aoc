@@ -40,53 +40,22 @@ class Day11 {
 
     @Test
     fun test2() {
-        val testInput = """
-            |Monkey 0:
-            |  Starting items: 79, 98
-            |  Operation: new = old * 19
-            |  Test: divisible by 23
-            |    If true: throw to monkey 2
-            |    If false: throw to monkey 3
-            |
-            |Monkey 1:
-            |  Starting items: 54, 65, 75, 74
-            |  Operation: new = old + 6
-            |  Test: divisible by 19
-            |    If true: throw to monkey 2
-            |    If false: throw to monkey 0
-            |
-            |Monkey 2:
-            |  Starting items: 79, 60, 97
-            |  Operation: new = old * old
-            |  Test: divisible by 13
-            |    If true: throw to monkey 1
-            |    If false: throw to monkey 3
-            |
-            |Monkey 3:
-            |  Starting items: 74
-            |  Operation: new = old + 3
-            |  Test: divisible by 17
-            |    If true: throw to monkey 0
-            |    If false: throw to monkey 1""".trimMargin()
-        val monkeys = testInput // Aoc.getInput(11)
+        val monkeys = Aoc.getInput(11)
             .split("\n\n").map { parse(it) }
-        val initials = monkeys.map { it.items.toList() }
+        // Found this on the solutions reddit, still not quite sure of the mathematics behind it though
+        val mod = monkeys.map { it.test }.reduce { a, b -> a * b }
         repeat(10000) {
-            monkeys.forEachIndexed { index, monkey ->
-                var i = 0
+            monkeys.forEach { monkey ->
                 while (monkey.items.isNotEmpty()) {
                     val next = monkey.items.removeFirst()
-                    var result = monkey.op(next)
+                    val result = monkey.op(next) % mod
                     monkey.inspections += 1
-
-                    result %= initials[index][i % initials[index].size]
                     if (result % monkey.test == 0L) {
                         monkeys[monkey.then].items.add(result)
                     }
                     else {
                         monkeys[monkey.`else`].items.add(result)
                     }
-                    i++
                 }
             }
         }
