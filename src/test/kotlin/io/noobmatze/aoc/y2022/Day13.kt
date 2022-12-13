@@ -11,9 +11,9 @@ class Day13 {
             .split("\n\n")
             .asSequence()
             .map { it.lines().map { parse(tokenize(it)) as Expr.Seq } }
-            .mapIndexed { index, (a, b) -> index to a.compare(b) }
-            .filter { it.second == LT }
-            .sumOf { it.first + 1 }
+            .withIndex()
+            .filter { it.value[0].compare(it.value[1]) == LT }
+            .sumOf { it.index + 1 }
 
         println(result)
     }
