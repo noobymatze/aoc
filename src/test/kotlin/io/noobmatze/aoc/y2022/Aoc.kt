@@ -17,6 +17,9 @@ object Aoc {
     fun <B> String.paired(sep: String, transform: (String) -> B): Pair<B, B> =
         split(sep).map(transform).let { (a, b) -> a to b }
 
+    fun <A> Regex.findAllByGroup(input: String, group: String, transform: (String) -> A): Sequence<A> =
+        findAll(input).mapNotNull { it.groups[group]?.value?.let(transform) }
+
     /**
      * Returns a new sequence mapping all [A]s to [B]s while threading a state [S] through every
      * transformation.
