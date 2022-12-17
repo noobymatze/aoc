@@ -6,7 +6,7 @@ import kotlin.test.Test
 class Day12 {
 
     data class Pos(val row: Int, val col: Int)
-    fun Pos.neighbors(): List<Pos> = listOf(
+    val Pos.neighbors: List<Pos> get() = listOf(
         Pos(row + 1, col),
         Pos(row - 1, col),
         Pos(row, col + 1),
@@ -17,8 +17,9 @@ class Day12 {
     fun test() {
         var start = Pos(0, 0)
         var end = Pos(0, 0)
-        val data = Aoc.getInput(12).lineSequence().flatMapIndexed { row, it ->
-            it.mapIndexed { col, it ->
+        val data = mutableMapOf<Pos, Int>()
+        Aoc.getInput(12).lineSequence().forEachIndexed { row, it ->
+            it.forEachIndexed { col, it ->
                 val c = when (it) {
                     'E' -> {
                         end = Pos(row, col)
@@ -30,17 +31,18 @@ class Day12 {
                     }
                     else -> it
                 }
-                Pos(row, col) to c.code - 97
+
+                data[Pos(row, col)] = c.code - 97
             }
-        }.toMap()
+        }
 
         val visited = mutableSetOf<Pos>()
         val frontier = mutableListOf(start)
-        val path = mutableMapOf<Pos, Pos>()
+        val paths = mutableSetOf<MutableList<Pos>>()
         while (frontier.isNotEmpty()) {
             val node = frontier.removeFirst()
             if (node in visited || node !in data || node == end) continue
-            node.neighbors().filter { it in data && data[it]!! <= data[node]!! + 1 }.forEach {
+            node.neighbors.forEach {
                 frontier.add(it)
             }
         }
