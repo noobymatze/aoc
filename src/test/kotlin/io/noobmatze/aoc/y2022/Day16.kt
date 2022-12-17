@@ -35,8 +35,6 @@ class Day16 {
                 valves[valve] = foundValves.drop(1)
             }
 
-        val distances = mutableMapOf<Pair<>>()
-
         println("     " + valves.map { it.key }.joinToString(" | "))
         for ((key, value) in valves) {
             println("$key | ")
