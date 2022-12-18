@@ -20,6 +20,11 @@ object Aoc {
     fun <A> Regex.findAllByGroup(input: String, group: String, transform: (String) -> A): Sequence<A> =
         findAll(input).mapNotNull { it.groups[group]?.value?.let(transform) }
 
+
+    infix fun <A> Set<A>.symmetricDifference(other: Set<A>): Set<A> =
+        (this - other) union (other - this)
+
+
     /**
      * Returns a new sequence mapping all [A]s to [B]s while threading a state [S] through every
      * transformation.
