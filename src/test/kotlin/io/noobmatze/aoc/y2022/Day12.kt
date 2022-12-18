@@ -43,7 +43,7 @@ class Day12 {
         val prev = mutableMapOf<Vertex, Vertex>()
         val dist = data.map { it.key to Int.MAX_VALUE }.toMap().toMutableMap()
         dist[start] = 0
-        val queue = PriorityQueue<Vertex> { a, b -> dist[a]!!.compareTo(dist[b]!!) }
+        val queue = mutableListOf<Vertex>()
         data.forEach { queue.add(it.key) }
         while (queue.isNotEmpty()) {
             val u = queue.minBy { dist[it]!! }
