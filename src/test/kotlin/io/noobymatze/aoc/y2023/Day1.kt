@@ -17,16 +17,15 @@ class Day1 {
 
     @Test
     fun test2() {
-        val patterns = mapOf(
-            "1" to "1", "2" to "2", "3" to "3", "4" to "4", "5" to "5",
-            "6" to "6", "7" to "7", "8" to "8", "9" to "9",
-            "one" to "1", "two" to "2", "three" to "3", "four" to "4",
-            "five" to "5", "six" to "6", "seven" to "7", "eight" to "8",
-            "nine" to "9",
+        val wordToDigit = mapOf(
+            "one" to "1", "two" to "2", "three" to "3",
+            "four" to "4", "five" to "5", "six" to "6",
+            "seven" to "7", "eight" to "8", "nine" to "9",
         )
 
-        fun String.findDigit(findPattern: String.(Collection<String>) -> Pair<Int, String>?): String =
-            findPattern(patterns.keys)?.second?.let { patterns[it] }!!
+        fun String.findDigit(findHelp: String.(Collection<String>) -> Pair<Int, String>?): String =
+            findHelp(wordToDigit.keys + wordToDigit.values)
+                ?.let { (_, word) -> if (word in wordToDigit.values) word else wordToDigit[word] }!!
 
         val result = Aoc.getInput(1)
             .lineSequence()
