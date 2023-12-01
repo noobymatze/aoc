@@ -1,8 +1,6 @@
-package io.noobmatze.aoc.y2022
+package io.noobymatze.aoc.y2022
 
-import io.noobmatze.aoc.y2022.Aoc.findAllByGroup
-import kotlin.math.abs
-import kotlin.math.max
+import io.noobymatze.aoc.Aoc.findAllByGroup
 import kotlin.test.Test
 
 class Day16 {

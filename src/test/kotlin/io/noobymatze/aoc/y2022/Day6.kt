@@ -1,7 +1,6 @@
-package io.noobmatze.aoc.y2022
+package io.noobymatze.aoc.y2022
 
-import io.noobmatze.aoc.y2022.Aoc.paired
-import java.util.Stack
+import io.noobymatze.aoc.Aoc
 import kotlin.test.Test
 
 class Day6 {

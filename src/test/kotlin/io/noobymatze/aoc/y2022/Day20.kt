@@ -1,4 +1,4 @@
-package io.noobmatze.aoc.y2022
+package io.noobymatze.aoc.y2022
 
 import kotlin.math.abs
 import kotlin.test.Test

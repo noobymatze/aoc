@@ -1,4 +1,4 @@
-package io.noobmatze.aoc.y2022
+package io.noobymatze.aoc
 
 import java.net.URI
 import java.net.http.HttpClient

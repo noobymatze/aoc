@@ -1,6 +1,7 @@
-package io.noobmatze.aoc.y2022
+package io.noobymatze.aoc.y2022
 
-import io.noobmatze.aoc.y2022.Day13.Order.*
+import io.noobymatze.aoc.Aoc
+import io.noobymatze.aoc.y2022.Day13.Order.*
 import kotlin.test.Test
 
 class Day13 {
