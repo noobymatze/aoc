@@ -5,16 +5,6 @@ import kotlin.test.Test
 
 class Day3 {
 
-    data class Pos(
-        val row: Int,
-        val col: Int,
-    ) {
-        val left: Pos get() = Pos(row, col - 1)
-        val right: Pos get() = Pos(row, col + 1)
-        val bottom: Pos get() = Pos(row + 1, col)
-        val top: Pos get() = Pos(row - 1, col)
-    }
-
     @Test
     fun test() {
         val input = Aoc.getInput(3)
