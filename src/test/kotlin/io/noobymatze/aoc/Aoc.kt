@@ -14,11 +14,17 @@ import kotlin.io.path.inputStream
 
 object Aoc {
 
+    val intRegex = Regex("\\d+")
+
     fun <B> String.paired(sep: String, transform: (String) -> B): Pair<B, B> =
         split(sep).map(transform).let { (a, b) -> a to b }
 
     fun <A> Regex.findAllByGroup(input: String, group: String, transform: (String) -> A): Sequence<A> =
         findAll(input).mapNotNull { it.groups[group]?.value?.let(transform) }
+
+    fun findAllInts(input: String): List<Int> {
+        return intRegex.findAll(input).map { it.value.toInt() }.toList()
+    }
 
 
     infix fun <A> Set<A>.symmetricDifference(other: Set<A>): Set<A> =
