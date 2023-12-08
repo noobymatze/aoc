@@ -63,9 +63,9 @@ class Day8 {
     }
 
     private fun lcm(a: Long, b: Long): Long =
-        (a * b) / gcm(a, b)
+        (a * b) / gcd(a, b)
 
-    private tailrec fun gcm(a: Long, b: Long): Long =
-        if (b == 0L) a else gcm(b, a % b)
+    private tailrec fun gcd(a: Long, b: Long): Long =
+        if (b == 0L) a else gcd(b, a % b)
 
 }
