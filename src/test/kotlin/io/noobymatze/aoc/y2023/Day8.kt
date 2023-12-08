@@ -7,17 +7,6 @@ class Day8 {
 
     @Test
     fun test() {
-        val test = """
-            RL
-
-            AAA = (BBB, CCC)
-            BBB = (DDD, EEE)
-            CCC = (ZZZ, GGG)
-            DDD = (DDD, DDD)
-            EEE = (EEE, EEE)
-            GGG = (GGG, GGG)
-            ZZZ = (ZZZ, ZZZ)
-        """.trimIndent()
         val (movement, nodesString) = Aoc.getInput(8)
             .split("\n\n")
 
@@ -43,18 +32,6 @@ class Day8 {
 
     @Test
     fun test2() {
-        val test = """
-            LR
-
-            11A = (11B, XXX)
-            11B = (XXX, 11Z)
-            11Z = (11B, XXX)
-            22A = (22B, XXX)
-            22B = (22C, 22C)
-            22C = (22Z, 22Z)
-            22Z = (22B, 22B)
-            XXX = (XXX, XXX)
-        """.trimIndent()
         val (movement, nodesString) = Aoc.getInput(8)
             .split("\n\n")
 
@@ -64,20 +41,31 @@ class Day8 {
             start to (left to right)
         }
 
-        var steps = 0L
-        val nodes = map.keys.filter { it.endsWith("A") }.toMutableList()
-        while (!nodes.all { it.endsWith("Z") }) {
-            val step = movement[(steps % movement.length).toInt()]
-            for ((i, node) in nodes.withIndex()) {
+        // Find the steps to the first node ending in Z for each starting node
+        val steps = map.keys.filter { it.endsWith("A") }.map {
+            var steps = 0L
+            var node = it
+            while (!node.endsWith("Z")) {
+                val step = movement[(steps % movement.length).toInt()]
                 if (step == 'R')
-                    nodes[i] = map[node]!!.second
+                    node = map[node]!!.second
                 else if (step == 'L')
-                    nodes[i] = map[node]!!.first
+                    node = map[node]!!.first
+                steps++
             }
-            steps++
+            steps
         }
 
-        println(steps)
+        // Once a node ending in Z is reached, it takes the same
+        // amount of steps to reach it again, therefore
+        // compute the least common denominator
+        println(steps.reduce { a, b -> lcm(a, b) })
     }
+
+    private fun lcm(a: Long, b: Long): Long =
+        (a * b) / gcm(a, b)
+
+    private tailrec fun gcm(a: Long, b: Long): Long =
+        if (b == 0L) a else gcm(b, a % b)
 
 }
