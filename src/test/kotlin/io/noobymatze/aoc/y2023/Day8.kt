@@ -58,7 +58,7 @@ class Day8 {
 
         // Once a node ending in Z is reached, it takes the same
         // amount of steps to reach it again, therefore
-        // compute the least common denominator
+        // compute the least common multiple
         println(steps.reduce { a, b -> lcm(a, b) })
     }
 
