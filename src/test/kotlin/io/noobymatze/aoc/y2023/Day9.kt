@@ -10,12 +10,11 @@ class Day9 {
         val result = Aoc.getInput(9)
             .lineSequence()
             .map { it.trim().split(" ").map { it.toInt() } }
-            .map { history ->
+            .sumOf { history ->
                 generateSequence(history) { it.zipWithNext { a, b -> b - a } }
                     .takeWhile { it.any { it != 0 } }
                     .sumOf { it.last() }
             }
-            .sum()
 
         println(result)
     }
@@ -25,12 +24,11 @@ class Day9 {
         val result = Aoc.getInput(9)
             .lineSequence()
             .map { it.trim().split(" ").map { it.toInt() } }
-            .map { history ->
+            .sumOf { history ->
                 generateSequence(history) { it.zipWithNext { a, b -> a - b } }
                     .takeWhile { it.any { it != 0 } }
                     .sumOf { it.first() }
             }
-            .sum()
 
         println(result)
     }
