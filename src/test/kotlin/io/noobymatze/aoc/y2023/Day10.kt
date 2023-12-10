@@ -61,6 +61,8 @@ class Day10 {
     @Test
     fun test2() {
         // I am absolutely not proud of this, but I don't know how to do it better...yet.
+        // Idea was to find the pipe, convert everything that is not the pipe to '.'
+        // and then run through the loop once and count every '.' on the right of each segment.
 
         val test = """
             FF7FSF7F7F7F7F7F---7
