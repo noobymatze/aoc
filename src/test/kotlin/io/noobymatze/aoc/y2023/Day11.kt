@@ -12,18 +12,6 @@ class Day11 {
 
     @Test
     fun test() {
-        val test = """
-            ...#......
-            .......#..
-            #.........
-            ..........
-            ......#...
-            .#........
-            .........#
-            ..........
-            .......#..
-            #...#.....
-        """.trimIndent()
         val input = Aoc.getInput(11)
             .lines()
             .expandRows()
@@ -38,29 +26,11 @@ class Day11 {
 
         val galaxyPairs = galaxies.allPairs().toSet()
 
-        //println(input.print())
-        //galaxyPairs.map { it to dist(it.first, it.second) }.forEach {
-        //    println(it)
-        //}
         println(galaxyPairs.sumOf { dist(it.first, it.second) })
-
-
     }
 
     @Test
     fun test2() {
-        val test = """
-            ...#......
-            .......#..
-            #.........
-            ..........
-            ......#...
-            .#........
-            .........#
-            ..........
-            .......#..
-            #...#.....
-        """.trimIndent()
         val input = Aoc.getInput(11)
             .lines()
 
@@ -87,12 +57,6 @@ class Day11 {
         }.allPairs().toSet()
 
         println(galaxies.sumOf { dist(it.first, it.second) })
-    }
-
-    private fun List<String>.print() {
-        println(
-            joinToString("\n")
-        )
     }
 
     private fun List<Pos>.allPairs(): List<Pair<Pos, Pos>> {
